@@ -1,10 +1,7 @@
-import entity.MasterNumber;
-import entity.Person;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import entity.*;
+
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PersonService {
@@ -20,7 +17,12 @@ public class PersonService {
   public Stream<Person> getPersonByMasterNumbers(List<MasterNumber> numbers) {
     //TODO: Add the code to return people by numbers
     // Use groupToPeople() method
-    return null;
+    List<String> number = numbers.stream().map(MasterNumber::getNumber).collect(Collectors.toList());
+    if (people.keySet().stream().anyMatch(element -> element.equals(number))) {
+      PersonSet personSet = people.get(number).get();
+      return personSet.groupToPeople();
+    } else {
+      return Stream.empty();
+    }
   }
-
 }

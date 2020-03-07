@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Person {
@@ -25,7 +26,8 @@ public class Person {
 
   public Optional<SimpleAddress> getSimpleAddress() {
     //TODO: return Optional<SimpleAddress>
-    return null;
+    return Optional.ofNullable(this.address)
+            .map(element -> new SimpleAddress(element.getStreet(), element.getCity()));
   }
 
   public Address getAddress() {
@@ -38,5 +40,31 @@ public class Person {
 
   public List<Telephone> getTelephones() {
     return telephones;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Person person = (Person) o;
+    return Objects.equals(masterNumber, person.masterNumber) &&
+            Objects.equals(address, person.address) &&
+            Objects.equals(telephones, person.telephones) &&
+            Objects.equals(emails, person.emails);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(masterNumber, address, telephones, emails);
+  }
+
+  @Override
+  public String toString() {
+    return "Person{" +
+            "masterNumber='" + masterNumber + '\'' +
+            ", address=" + address +
+            ", telephones=" + telephones +
+            ", emails=" + emails +
+            '}';
   }
 }
