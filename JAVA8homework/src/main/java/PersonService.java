@@ -18,10 +18,10 @@ public class PersonService {
     //TODO: Add the code to return people by numbers
     // Use groupToPeople() method
     List<String> number = numbers.stream().map(MasterNumber::getNumber).collect(Collectors.toList());
-    if (people.keySet().stream().anyMatch(element -> element.equals(number))) {
+    try {
       PersonSet personSet = people.get(number).get();
       return personSet.groupToPeople();
-    } else {
+    } catch (Exception e) {
       return Stream.empty();
     }
   }
